@@ -1,10 +1,12 @@
 #ifndef SQLCONTROLLER_H
 #define SQLCONTROLLER_H
 
-class sqlcontroller
+#include <cstdio>
+class SqlController
 {
 public:
-    sqlcontroller();
+    SqlController();
+    static void SelectSql();
 };
 
 #endif // SQLCONTROLLER_H

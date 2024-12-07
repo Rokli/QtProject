@@ -1,3 +1,10 @@
 #include "sqlcontroller.h"
 
-sqlcontroller::sqlcontroller() {}
+SqlController::SqlController() {}
+
+void SqlController::SelectSql() {
+    perror("всё сработало");
+}
+extern "C" void SelectSql() {
+    SqlController::SelectSql();
+}
