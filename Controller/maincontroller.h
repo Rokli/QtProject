@@ -14,7 +14,7 @@ private:
     bool regFlag;
     QTextEdit *test;
 public:
-    MainController(QTextEdit *ui);
+    MainController();
     void Route(string controller,string method);
     void RegUser();
 };

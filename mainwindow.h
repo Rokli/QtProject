@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Controller/maincontroller.h"
+#include "qsqldatabase.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,13 +20,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_7_clicked();
-
     void on_addButton_clicked();
 
     void on_lookButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QSqlDatabase db;
+    map<string, string> tablesMap = {{"Банк","Bank"}};
 };
 #endif // MAINWINDOW_H

@@ -1,7 +1,6 @@
 #include "maincontroller.h"
 
-MainController::MainController(QTextEdit *test) {
-    this->test = test;
+MainController::MainController() {
 }
 
 void MainController::Route(string controller,string method) {
@@ -24,8 +23,7 @@ void MainController::Route(string controller,string method) {
         while ((ent = readdir(dir)) != nullptr) {
             string tmp = ent->d_name;
 
-            this->test->append(ent->d_name);
-            if (/*tmp.find(controller) != std::string::npos && */tmp.find(extension) != std::string::npos) {
+            if (/*tmp.find(controller) != std::string::npos &&*/ tmp.find(extension) != std::string::npos) {
 
                 string path = "../../Controller/" + tmp;
 

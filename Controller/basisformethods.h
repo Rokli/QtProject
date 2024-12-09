@@ -1,10 +1,15 @@
 #ifndef BASISFORMETHODS_H
 #define BASISFORMETHODS_H
 
-class basisformethods
+class BasisFormethods
 {
 public:
-    basisformethods();
+
+    static void selectTable();
+    static void deleteTable();
+    static void findTable();
+    static void changeTable();
+    static void lookTable();
 };
 
 #endif // BASISFORMETHODS_H

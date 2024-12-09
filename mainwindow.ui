@@ -50,7 +50,7 @@
      <attribute name="title">
       <string>Справочники</string>
      </attribute>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -97,7 +97,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -109,6 +109,9 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QComboBox" name="comboBox">
+         <property name="controller" stdset="0">
+          <string>bank</string>
+         </property>
          <item>
           <property name="text">
            <string>Банк</string>
