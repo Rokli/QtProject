@@ -4,7 +4,11 @@
 #include <QMainWindow>
 #include "Controller/maincontroller.h"
 #include "qsqldatabase.h"
-
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
+#include <QLoggingCategory>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -26,7 +30,20 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QSqlDatabase db;
-    map<string, string> tablesMap = {{"Банк","Bank"}};
+    map<string, string> tablesMap = {
+        {"Банк","Bank"},
+        {"Категория","Category"},
+        {"Кинотеатр","Cinema"},
+        {"Город","City"},
+        {"Улица","Street"},
+        {"Режиссёр","Director"},
+        {"Компания-производитель","Production_Company"},
+        {"Рента","Renta"},
+        {"Кино","Movie"},
+        {"Правообладатель","Copyright_holder"},
+        {"Сценарист","Screenwriter"},
+        {"Поставщик","Supplier"}
+    };
+    MainController main;
 };
 #endif // MAINWINDOW_H

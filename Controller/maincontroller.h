@@ -1,22 +1,25 @@
 #ifndef MAINCONTROLLER_H
 #define MAINCONTROLLER_H
-
-#include "qtextedit.h"
-#include <dirent.h>
-#include <dlfcn.h>
-#include <string>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
+#include<QTableView>
+#include "../Models/processingtable.h"
 
 using namespace std;
 
 class MainController
 {
 private:
-    bool regFlag;
-    QTextEdit *test;
+    ProcessingTable helpWindow;
+    QSqlDatabase db;
+
 public:
-    MainController();
-    void Route(string controller,string method);
-    void RegUser();
+    void AddDB(QString tableName);
+    void ConnectDB();
+    void AllDB(string tableName, QTableView *view);
+    void DeleteDB();
+    void FindDB();
+    void SelectDB();
 };
 
 #endif // MAINCONTROLLER_H

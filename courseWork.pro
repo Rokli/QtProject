@@ -9,22 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Controller/bankcontroller.cpp \
-    Controller/basisformethods.cpp \
     Controller/maincontroller.cpp \
-    Controller/sqlcontroller.cpp \
+    Models/processingtable.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sqlbd.cpp
 
 HEADERS += \
-    Controller/bankcontroller.h \
-    Controller/basisformethods.h \
     Controller/maincontroller.h \
-    Controller/sqlcontroller.h \
-    mainwindow.h
+    Models/processingtable.h \
+    mainwindow.h \
+    sqlbd.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    sqlbd.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
