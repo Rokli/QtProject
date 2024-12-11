@@ -19,6 +19,7 @@ void SqlBD::SetupWindow(QString text){
     QLineEdit *lineEdit = new QLineEdit(this);
     hLayout->addWidget(lineEdit);
 
+    lineEditData[text] = lineEdit;
     layout->addLayout(hLayout);
 }
 void SqlBD::AddButton(QString text){
@@ -27,21 +28,16 @@ void SqlBD::AddButton(QString text){
     layout->addWidget(button);
 }
 
-void SqlBD::ClearLayout(){
-    if (layout) {
-        QLayoutItem* item;
-        while ((item = layout->takeAt(0)) != nullptr) {
-            QWidget* widget = item->widget();
-            if (widget) {
-                widget->deleteLater();
-            }
-            delete item;
-        }
-    }
+QMap<QString,QString> SqlBD::GetDataColumns(){
+    return DataColumns;
 }
-
 void SqlBD::on_button_clicked(){
-    qWarning() << "123";
+    QMap<QString, QLineEdit*>::const_iterator i;
+
+    for (i = lineEditData.constBegin(); i != lineEditData.constEnd(); ++i)
+        DataColumns[i.key()] = i.value()->text();
+
+    close();
 }
 SqlBD::~SqlBD()
 {

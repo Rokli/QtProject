@@ -21,12 +21,14 @@ public:
     explicit SqlBD(QWidget *parent = nullptr);
     ~SqlBD();
     void SetupWindow(QString text);
+    QMap<QString,QString> GetDataColumns();
     void on_button_clicked();
     void AddButton(QString text);
-    void ClearLayout();
 private:
     Ui::SqlBD *ui;
     QVBoxLayout *layout;
+    QMap<QString,QLineEdit*> lineEditData;
+    QMap<QString,QString> DataColumns;
 };
 
 #endif // SQLBD_H

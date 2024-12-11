@@ -1,11 +1,12 @@
 #include "processingtable.h"
 using namespace std;
-string ProcessingTable::GetData(int columns, QString text,QVector<QString> name){
+QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QVector<QString> name){
+    SqlBD *main = new SqlBD();
     for(int i = 0; i < columns;i++){
-        window.SetupWindow(name[i]);
+        main->SetupWindow(name[i]);
     }
-    window.AddButton(text);
-    window.show();
-    // window.ClearLayout();
-    return "123";
+    main->AddButton(text);
+    main->exec();
+    QMap<QString,QString> dataColumns = main->GetDataColumns();
+    return dataColumns;
 };

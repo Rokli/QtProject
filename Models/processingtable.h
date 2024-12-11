@@ -10,7 +10,7 @@ class ProcessingTable
 private:
     SqlBD window;
 public:
-    string GetData(int columns, QString text, QVector<QString> name);
+    QMap<QString, QString> CreateWindow(int columns, QString text, QVector<QString> name);
 };
 
 #endif // PROCESSINGTABLE_H
