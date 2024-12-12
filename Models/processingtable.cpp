@@ -10,3 +10,24 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QV
     QMap<QString,QString> dataColumns = main->GetDataColumns();
     return dataColumns;
 };
+
+
+QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text){
+    SqlBD *main = new SqlBD();
+    main->SetupWindow("id");
+    main->AddButton(text);
+    main->exec();
+    QMap<QString,QString> dataColumns = main->GetDataColumns();
+    return dataColumns;
+};
+
+QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QMap<QString,QString> name){
+    SqlBD *main = new SqlBD();
+    for (const auto& key : name.keys()) {
+        main->SetupWindow(key,name.value(key));
+    }
+    main->AddButton(text);
+    main->exec();
+    QMap<QString,QString> dataColumns = main->GetDataColumns();
+    return dataColumns;
+};

@@ -1,6 +1,6 @@
 #include "maincontroller.h"
 #include <QSqlQuery>
-
+#include <QSqlRecord>
 
 void MainController::AllDB(string tableName,QTableView *view){
     QSqlQueryModel *model = new QSqlQueryModel(nullptr);
@@ -13,15 +13,64 @@ void MainController::AllDB(string tableName,QTableView *view){
 
     view->setModel(model);
 };
-void MainController::DeleteDB(){
 
-};
-void MainController::FindDB(){
+void MainController::DeleteDB(QString tableName){
+    QSqlQuery query(db);
+    QMap<QString,QString> values = helpWindow.CreateWindow(1,"Удалить");
 
+    QString sql = QString("DELETE FROM %1 WHERE id=%2").arg(tableName, values["id"]);
+    query.prepare(sql);
+    query.exec();
 };
-void MainController::SelectDB(){
 
-};
+void MainController::FindDB(QString tableName,QTableView *view){
+    QMap<QString,QString> values = helpWindow.CreateWindow(1,"Найти");
+    QString sql = QString("SELECT * FROM %1 WHERE id=%2").arg(tableName, values["id"]);
+
+    QSqlQueryModel *model = new QSqlQueryModel(nullptr);
+
+    QSqlQuery query(db);
+    query.exec(sql);
+
+    model->setQuery(query);
+
+    view->setModel(model);
+}
+
+void MainController::ChangeDB(QString tableName){
+    QSqlQuery query(db);
+    QMap<QString,QString> getID = helpWindow.CreateWindow(1,"Выбрать");
+
+    QString sql = QString("SELECT * FROM %1 WHERE id=%2").arg(tableName, getID["id"]);
+
+    query.prepare(sql);
+    query.exec();
+    query.next();
+
+    QSqlRecord record = query.record();
+    int columnCount = record.count();
+
+    QMap<QString,QString> name;
+    for (int i = 0; i < columnCount; ++i) {
+        QString columnName = record.fieldName(i);
+        QVariant value = query.value(i);
+        name[columnName] = value.toString();
+        qWarning() << query.value(i);
+    }
+    name.remove("id");
+    QMap<QString,QString> updatedValues = helpWindow.CreateWindow(columnCount-1,"Изменить",name);
+
+    QString updateSQL = QString("UPDATE %1 SET ").arg(tableName);
+    QStringList updateParts;
+    for (auto it = updatedValues.begin(); it != updatedValues.end(); ++it) {
+        updateParts << QString("%1='%2'").arg(it.key(), it.value());
+    }
+    updateSQL += updateParts.join(", ");
+    updateSQL += QString(" WHERE id=%1").arg(getID["id"]);
+
+    query.prepare(updateSQL);
+    query.exec();
+}
 
 void MainController::AddDB(QString tableName){
     int count = 0;
@@ -73,7 +122,8 @@ void MainController::AddDB(QString tableName){
     }
     query.exec();
 
-};
+
+}
 
 void MainController::ConnectDB(){
     db = QSqlDatabase::addDatabase("QMYSQL", "my_connection");

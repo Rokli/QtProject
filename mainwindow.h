@@ -28,6 +28,12 @@ private slots:
 
     void on_lookButton_clicked();
 
+    void on_deleteButton_clicked();
+
+    void on_findButton_clicked();
+
+    void on_changeButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     map<string, string> tablesMap = {

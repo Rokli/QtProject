@@ -17,9 +17,9 @@ public:
     void AddDB(QString tableName);
     void ConnectDB();
     void AllDB(string tableName, QTableView *view);
-    void DeleteDB();
-    void FindDB();
-    void SelectDB();
+    void DeleteDB(QString tableName);
+    void FindDB(QString tableName, QTableView *view);
+    void ChangeDB(QString tableName);
 };
 
 #endif // MAINCONTROLLER_H

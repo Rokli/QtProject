@@ -29,3 +29,24 @@ void MainWindow::on_lookButton_clicked()
     main.AllDB(tablesMap[tmp.toStdString()],ui->tableView);
 }
 
+
+void MainWindow::on_deleteButton_clicked()
+{
+    QString tmp = ui->comboBox->currentText();
+    main.DeleteDB(QString::fromStdString(tablesMap[tmp.toStdString()]));
+}
+
+
+void MainWindow::on_findButton_clicked()
+{
+    QString tmp = ui->comboBox->currentText();
+    main.FindDB(QString::fromStdString(tablesMap[tmp.toStdString()]),ui->tableView);
+}
+
+
+void MainWindow::on_changeButton_clicked()
+{
+    QString tmp = ui->comboBox->currentText();
+    main.ChangeDB(QString::fromStdString(tablesMap[tmp.toStdString()]));
+}
+

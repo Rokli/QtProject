@@ -11,6 +11,8 @@ private:
     SqlBD window;
 public:
     QMap<QString, QString> CreateWindow(int columns, QString text, QVector<QString> name);
+    QMap<QString,QString> CreateWindow(int columns, QString text);
+    QMap<QString,QString> CreateWindow(int columns, QString text,QMap<QString,QString> name);
 };
 
 #endif // PROCESSINGTABLE_H

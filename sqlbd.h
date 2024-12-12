@@ -21,6 +21,7 @@ public:
     explicit SqlBD(QWidget *parent = nullptr);
     ~SqlBD();
     void SetupWindow(QString text);
+    void SetupWindow(QString name, QString value);
     QMap<QString,QString> GetDataColumns();
     void on_button_clicked();
     void AddButton(QString text);
