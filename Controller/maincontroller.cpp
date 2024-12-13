@@ -151,14 +151,14 @@ void MainController::GetDocuments(QString sql, QTableView *view){
 }
 
 void MainController::SaveDocuments(QString sql){
-    QSqlQuery query;
+    QSqlQuery query(db);
 
     if (!query.exec(dataSQL[sql])) {
         qDebug() << "Ошибка выполнения запроса:" << query.lastError().text();
         return;
     }
 
-    QFile file("../../documents");
+    QFile file("../../documents/documents.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Ошибка открытия файла для записи:" << file.errorString();
         return;
@@ -169,20 +169,21 @@ void MainController::SaveDocuments(QString sql){
     QSqlRecord record = query.record();
     int columnCount = record.count();
 
+    const int columnWidth = 20;
+
+
     for (int i = 0; i < columnCount; ++i) {
-        out << record.fieldName(i);
-        if (i < columnCount - 1) {
-            out << "\t";
-        }
+        out << record.fieldName(i).leftJustified(columnWidth, ' ');
     }
     out << "\n";
 
+
+    out << QString("-").repeated(columnWidth * columnCount) << "\n";
+
+
     while (query.next()) {
         for (int i = 0; i < columnCount; ++i) {
-            out << query.value(i).toString();
-            if (i < columnCount - 1) {
-                out << "\t";
-            }
+            out << query.value(i).toString().leftJustified(columnWidth, ' ');
         }
         out << "\n";
     }
@@ -198,3 +199,4 @@ void MainController::ConnectDB(){
     db.setPassword("xrxc321");
     db.open();
 }
+

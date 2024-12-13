@@ -52,6 +52,7 @@ private slots:
 
     void on_saveButton_clicked();
 
+    void SetupWindow();
 private:
     Ui::MainWindow *ui;
     map<string, string> tablesMap = {

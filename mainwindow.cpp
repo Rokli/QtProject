@@ -9,11 +9,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     main.ConnectDB();
+    SetupWindow();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::SetupWindow(){
 }
 
 void MainWindow::on_addButton_clicked()
@@ -103,6 +107,6 @@ void MainWindow::on_documentButton_clicked()
 
 void MainWindow::on_saveButton_clicked()
 {
-
+    main.SaveDocuments(ui->documents->currentText());
 }
 
