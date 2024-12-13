@@ -1,15 +1,14 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    main.ConnectDB();
-    SetupWindow();
+    main.ConnectDB("reg.GetName()","123");
 }
 
 MainWindow::~MainWindow()
@@ -18,6 +17,17 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::SetupWindow(){
+    RegUser reg;
+    reg.exec();
+    if(main.ConnectDB(reg.GetName(),reg.GetPassword())){
+        reg.close();
+        show();
+    }else{
+        QMessageBox* msgBox = new QMessageBox(nullptr);
+        msgBox->setText("Произошла ошибка");
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->show();
+    }
 }
 
 void MainWindow::on_addButton_clicked()

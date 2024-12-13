@@ -19,7 +19,7 @@ private:
     };
 public:
     void AddDB(QString tableName);
-    void ConnectDB();
+    bool ConnectDB(QString name, QString password);
     void AllDB(string tableName, QTableView *view);
     void DeleteDB(QString tableName);
     void FindDB(QString tableName, QTableView *view);

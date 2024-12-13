@@ -13,16 +13,19 @@ SOURCES += \
     Models/processingtable.cpp \
     main.cpp \
     mainwindow.cpp \
+    reguser.cpp \
     sqlbd.cpp
 
 HEADERS += \
     Controller/maincontroller.h \
     Models/processingtable.h \
     mainwindow.h \
+    reguser.h \
     sqlbd.h
 
 FORMS += \
     mainwindow.ui \
+    reguser.ui \
     sqlbd.ui
 
 # Default rules for deployment.

@@ -3,6 +3,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QFile>
+
 void MainController::AllDB(string tableName,QTableView *view){
     QSqlQueryModel *model = new QSqlQueryModel(nullptr);
 
@@ -191,12 +192,21 @@ void MainController::SaveDocuments(QString sql){
     file.close();
 }
 
-void MainController::ConnectDB(){
+bool MainController::ConnectDB(QString name,QString password){
     db = QSqlDatabase::addDatabase("QMYSQL", "my_connection");
     db.setHostName("localhost");
     db.setDatabaseName("FilmScreening");
     db.setUserName("root");
     db.setPassword("xrxc321");
-    db.open();
+
+    if (!db.open()) {
+        return false;
+    }
+
+    if (!db.isValid()) {
+        return false;
+    }
+
+    return true;
 }
 

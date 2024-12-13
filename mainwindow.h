@@ -9,6 +9,8 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QLoggingCategory>
+#include "reguser.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -52,7 +54,6 @@ private slots:
 
     void on_saveButton_clicked();
 
-    void SetupWindow();
 private:
     Ui::MainWindow *ui;
     map<string, string> tablesMap = {
@@ -70,5 +71,7 @@ private:
         {"Поставщик","Supplier"}
     };
     MainController main;
+public:
+    void SetupWindow();
 };
 #endif // MAINWINDOW_H
