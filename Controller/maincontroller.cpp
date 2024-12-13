@@ -1,7 +1,8 @@
 #include "maincontroller.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
-
+#include <QSqlError>
+#include <QFile>
 void MainController::AllDB(string tableName,QTableView *view){
     QSqlQueryModel *model = new QSqlQueryModel(nullptr);
 
@@ -123,6 +124,70 @@ void MainController::AddDB(QString tableName){
     query.exec();
 
 
+}
+
+void MainController::GetEmployees(QTableView *view){
+    QSqlQueryModel* model = new QSqlQueryModel(nullptr);
+    QString sql = "SELECT User, Host, authentication_string FROM mysql.user";
+    model->setQuery(sql, db);
+
+    view->setModel(model);
+}
+
+QString MainController::Console(QString sql){
+    QSqlQuery query(db);
+    query.prepare(sql);
+    if (query.exec(sql)) {
+        return "Запрос выполнен";
+    } else {
+        return "Произошла ошибка:" + query.lastError().text();
+    }
+}
+
+void MainController::GetDocuments(QString sql, QTableView *view){
+    QSqlQueryModel* model = new QSqlQueryModel(nullptr);
+    model->setQuery(dataSQL[sql], db);
+    view->setModel(model);
+}
+
+void MainController::SaveDocuments(QString sql){
+    QSqlQuery query;
+
+    if (!query.exec(dataSQL[sql])) {
+        qDebug() << "Ошибка выполнения запроса:" << query.lastError().text();
+        return;
+    }
+
+    QFile file("../../documents");
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Ошибка открытия файла для записи:" << file.errorString();
+        return;
+    }
+
+    QTextStream out(&file);
+
+    QSqlRecord record = query.record();
+    int columnCount = record.count();
+
+    for (int i = 0; i < columnCount; ++i) {
+        out << record.fieldName(i);
+        if (i < columnCount - 1) {
+            out << "\t";
+        }
+    }
+    out << "\n";
+
+    while (query.next()) {
+        for (int i = 0; i < columnCount; ++i) {
+            out << query.value(i).toString();
+            if (i < columnCount - 1) {
+                out << "\t";
+            }
+        }
+        out << "\n";
+    }
+
+    file.close();
 }
 
 void MainController::ConnectDB(){

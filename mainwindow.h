@@ -34,6 +34,24 @@ private slots:
 
     void on_changeButton_clicked();
 
+    void on_sundryButton_clicked();
+
+    void on_employeesButton_clicked();
+
+    void on_ordersButton_clicked();
+
+    void on_documentsButton_clicked();
+
+    void on_directoriesButton_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_consoleEdit_returnPressed();
+
+    void on_documentButton_clicked();
+
+    void on_saveButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     map<string, string> tablesMap = {
