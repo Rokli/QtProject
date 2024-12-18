@@ -8,6 +8,9 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QErrorMessage>
+#include <QSqlQueryModel>
+#include <QTableView>
+#include <Models/hashpassword.h>
 
 namespace Ui {
 class SqlBD;
@@ -25,6 +28,7 @@ public:
     QMap<QString,QString> GetDataColumns();
     void on_button_clicked();
     void AddButton(QString text);
+    void SetTableView(QSqlQueryModel *model);
 private:
     Ui::SqlBD *ui;
     QVBoxLayout *layout;

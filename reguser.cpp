@@ -6,6 +6,7 @@ RegUser::RegUser(QWidget *parent)
     , ui(new Ui::RegUser)
 {
     ui->setupUi(this);
+    ui->passwordUser->setEchoMode(QLineEdit::Password);
 }
 
 RegUser::~RegUser()

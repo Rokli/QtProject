@@ -50,10 +50,32 @@ void SqlBD::on_button_clicked(){
     for (i = lineEditData.constBegin(); i != lineEditData.constEnd(); ++i){
         QString text = i.value()->text();
         if (text.isEmpty()) continue;
+        if (i.key() == "password_hash") text = HashPassword::HashCode(text);
+
+        qWarning() << text << " " << i.key();
+
         DataColumns[i.key()] = text;
     }
 
     close();
+}
+void SqlBD::SetTableView(QSqlQueryModel *model) {
+    QTableView *tableView = new QTableView(this);
+    tableView->setModel(model);
+    tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    QLayout *existingLayout = this->layout;
+
+    if (existingLayout) {
+        existingLayout->addWidget(tableView);
+    } else {
+        QVBoxLayout *layout = new QVBoxLayout(this);
+        layout->addWidget(tableView);
+        setLayout(layout);
+    }
+
+    exec();
 }
 SqlBD::~SqlBD()
 {

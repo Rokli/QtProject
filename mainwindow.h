@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QLoggingCategory>
 #include "reguser.h"
+#include "Models/hashpassword.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -54,9 +55,19 @@ private slots:
 
     void on_saveButton_clicked();
 
+    void on_lineEdit_returnPressed();
+
+    void on_consoleDocuments_returnPressed();
+
+    void on_addEmployees_clicked();
+
+    void on_deleteEmployess_clicked();
+
+    void on_changeEmploess_clicked();
+
 private:
     Ui::MainWindow *ui;
-    map<string, string> tablesMap = {
+    map<QString, QString> tablesMap = {
         {"Банк","Bank"},
         {"Категория","Category"},
         {"Кинотеатр","Cinema"},
@@ -68,7 +79,8 @@ private:
         {"Кино","Movie"},
         {"Правообладатель","Copyright_holder"},
         {"Сценарист","Screenwriter"},
-        {"Поставщик","Supplier"}
+        {"Поставщик","Supplier"},
+        {"Сотрудники","usersQt"}
     };
     MainController main;
 public:

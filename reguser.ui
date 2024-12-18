@@ -10,8 +10,56 @@
     <height>455</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string> Вход</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Стиль для QLineEdit */
+QLineEdit {
+    background-color: #f9f9f9; /* Светлый фон */
+    border: 2px solid #d3d3d3; /* Светло-серая граница */
+    border-radius: 8px; /* Закругленные углы */
+    padding: 6px 12px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+}
+
+QLineEdit:focus {
+    border: 2px solid #4CAF50; /* Граница становится зеленой при фокусе */
+    background-color: #ffffff; /* Белый фон при фокусе */
+}
+
+/* Стиль для QPushButton */
+QPushButton {
+    background-color: #4CAF50; /* Зеленый фон */
+    border: none; /* Убираем границу */
+    color: white; /* Белый текст */
+    padding: 12px 24px; /* Внутренний отступ */
+    text-align: center; /* Текст по центру */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный текст */
+    border-radius: 8px; /* Закругленные углы */
+    cursor: pointer; /* Курсор-рука */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Более темный зеленый при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #3e8e41; /* Темный зеленый при нажатии */
+}
+
+QPushButton:disabled {
+    background-color: #d3d3d3; /* Серый фон для неактивной кнопки */
+    color: #8c8c8c; /* Серый текст */
+    cursor: not-allowed; /* Убираем активный курсор */
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -48,6 +96,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="regUserButton">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Войти</string>
        </property>

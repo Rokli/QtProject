@@ -2,9 +2,9 @@
 #define MAINCONTROLLER_H
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
-#include<QTableView>
+#include <QTableView>
+#include <QStandardItemModel>
 #include "../Models/processingtable.h"
-
 using namespace std;
 
 class MainController
@@ -20,14 +20,16 @@ private:
 public:
     void AddDB(QString tableName);
     bool ConnectDB(QString name, QString password);
-    void AllDB(string tableName, QTableView *view);
+    void AllDB(QString tableName, QTableView *view);
     void DeleteDB(QString tableName);
     void FindDB(QString tableName, QTableView *view);
     void ChangeDB(QString tableName);
     void GetEmployees(QTableView *view);
     QString Console(QString sql);
+    QString Console(QString sql,QTableView* view);
     void GetDocuments(QString sql, QTableView *view);
-    void SaveDocuments(QString sql);
+    void SaveDocuments(QAbstractItemModel *model);
+    bool GetUser(QString name, QString password);
 };
 
 #endif // MAINCONTROLLER_H

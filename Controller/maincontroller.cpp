@@ -4,12 +4,12 @@
 #include <QSqlError>
 #include <QFile>
 
-void MainController::AllDB(string tableName,QTableView *view){
+void MainController::AllDB(QString tableName,QTableView *view){
     QSqlQueryModel *model = new QSqlQueryModel(nullptr);
 
     qWarning() << tableName;
     QSqlQuery query(db);
-    query.exec("SELECT * FROM " + QString::fromStdString(tableName));
+    query.exec("SELECT * FROM " + tableName);
 
     model->setQuery(query);
 
@@ -100,7 +100,6 @@ void MainController::AddDB(QString tableName){
     query.exec();
 
     while (query.next()) {
-        qWarning() << query.value(0).toString();
         name.append(query.value(0).toString());
     }
     name.removeAt(0);
@@ -129,16 +128,38 @@ void MainController::AddDB(QString tableName){
 
 void MainController::GetEmployees(QTableView *view){
     QSqlQueryModel* model = new QSqlQueryModel(nullptr);
-    QString sql = "SELECT User, Host, authentication_string FROM mysql.user";
+    QString sql = "SELECT * FROM usersQt";
     model->setQuery(sql, db);
 
     view->setModel(model);
 }
 
 QString MainController::Console(QString sql){
+    SqlBD helpWindow(nullptr);
+    QSqlQueryModel *model = new QSqlQueryModel(nullptr);
+    QSqlQuery query(db);
+    query.prepare(sql);
+    query.exec();
+    if(sql.contains("SELECT")){
+        model->setQuery(query);
+        helpWindow.SetTableView(model);
+        return "Запрос выполнен";
+    }else{
+        if (query.exec(sql)) {
+            return "Запрос выполнен";
+        } else {
+            return "Произошла ошибка:" + query.lastError().text();
+        }
+    }
+}
+
+QString MainController::Console(QString sql,QTableView* view){
+    QSqlQueryModel *model = new QSqlQueryModel(nullptr);;
     QSqlQuery query(db);
     query.prepare(sql);
     if (query.exec(sql)) {
+        model->setQuery(query);
+        view->setModel(model);
         return "Запрос выполнен";
     } else {
         return "Произошла ошибка:" + query.lastError().text();
@@ -151,42 +172,25 @@ void MainController::GetDocuments(QString sql, QTableView *view){
     view->setModel(model);
 }
 
-void MainController::SaveDocuments(QString sql){
-    QSqlQuery query(db);
-
-    if (!query.exec(dataSQL[sql])) {
-        qDebug() << "Ошибка выполнения запроса:" << query.lastError().text();
-        return;
-    }
-
+void MainController::SaveDocuments(QAbstractItemModel *model){
     QFile file("../../documents/documents.txt");
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Ошибка открытия файла для записи:" << file.errorString();
-        return;
-    }
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
 
-    QTextStream out(&file);
-
-    QSqlRecord record = query.record();
-    int columnCount = record.count();
-
-    const int columnWidth = 20;
-
-
-    for (int i = 0; i < columnCount; ++i) {
-        out << record.fieldName(i).leftJustified(columnWidth, ' ');
-    }
-    out << "\n";
-
-
-    out << QString("-").repeated(columnWidth * columnCount) << "\n";
-
-
-    while (query.next()) {
-        for (int i = 0; i < columnCount; ++i) {
-            out << query.value(i).toString().leftJustified(columnWidth, ' ');
+        for (int col = 0; col < model->columnCount(); ++col) {
+            out << model->headerData(col, Qt::Horizontal).toString();
+            if (col < model->columnCount() - 1) out << "\t";
         }
         out << "\n";
+
+        for (int row = 0; row < model->rowCount(); ++row) {
+            for (int col = 0; col < model->columnCount(); ++col) {
+                QModelIndex index = model->index(row, col);
+                out << model->data(index).toString();
+                if (col < model->columnCount() - 1) out << "\t";
+            }
+            out << "\n";
+        }
     }
 
     file.close();
@@ -196,8 +200,8 @@ bool MainController::ConnectDB(QString name,QString password){
     db = QSqlDatabase::addDatabase("QMYSQL", "my_connection");
     db.setHostName("localhost");
     db.setDatabaseName("FilmScreening");
-    db.setUserName("root");
-    db.setPassword("xrxc321");
+    db.setUserName(name);
+    db.setPassword(password);
 
     if (!db.open()) {
         return false;
@@ -208,5 +212,26 @@ bool MainController::ConnectDB(QString name,QString password){
     }
 
     return true;
+}
+
+bool MainController::GetUser(QString name, QString password){
+    QSqlQuery query(db);
+    QString sql = "SELECT COUNT(*) FROM usersQt WHERE username = :username AND  password_hash = :password";
+    query.prepare(sql);
+    query.bindValue(":username", name);
+    query.bindValue(":password", password);
+    if (!query.exec()) {
+        qDebug() << "Ошибка выполнения запроса:" << query.lastError().text();
+        return false;
+    }
+
+    if (query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0;
+    }
+
+    return false;
+
+
 }
 

@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Controller/maincontroller.cpp \
+    Models/hashpassword.cpp \
     Models/processingtable.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     Controller/maincontroller.h \
+    Models/hashpassword.h \
     Models/processingtable.h \
     mainwindow.h \
     reguser.h \
