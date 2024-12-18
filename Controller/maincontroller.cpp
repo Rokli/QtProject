@@ -18,15 +18,22 @@ void MainController::AllDB(QString tableName,QTableView *view){
 
 void MainController::DeleteDB(QString tableName){
     QSqlQuery query(db);
-    QMap<QString,QString> values = helpWindow.CreateWindow(1,"Удалить");
+    QString textButton;
+    if(!reg) textButton = "Удалить";
+    else textButton = "Delete";
+    QMap<QString,QString> values = helpWindow.CreateWindow(1,textButton);
 
     QString sql = QString("DELETE FROM %1 WHERE id=%2").arg(tableName, values["id"]);
     query.prepare(sql);
     query.exec();
-};
+}
 
 void MainController::FindDB(QString tableName,QTableView *view){
-    QMap<QString,QString> values = helpWindow.CreateWindow(1,"Найти");
+    QString textButton;
+    if(!reg) textButton = "Найти";
+    else textButton = "Find";
+
+    QMap<QString,QString> values = helpWindow.CreateWindow(1,textButton);
     QString sql = QString("SELECT * FROM %1 WHERE id=%2").arg(tableName, values["id"]);
 
     QSqlQueryModel *model = new QSqlQueryModel(nullptr);
@@ -41,7 +48,10 @@ void MainController::FindDB(QString tableName,QTableView *view){
 
 void MainController::ChangeDB(QString tableName){
     QSqlQuery query(db);
-    QMap<QString,QString> getID = helpWindow.CreateWindow(1,"Выбрать");
+    QString textButton;
+    if(!reg) textButton = "Выбрать";
+    else textButton = "Select";
+    QMap<QString,QString> getID = helpWindow.CreateWindow(1,textButton);
 
     QString sql = QString("SELECT * FROM %1 WHERE id=%2").arg(tableName, getID["id"]);
 
@@ -60,7 +70,9 @@ void MainController::ChangeDB(QString tableName){
         qWarning() << query.value(i);
     }
     name.remove("id");
-    QMap<QString,QString> updatedValues = helpWindow.CreateWindow(columnCount-1,"Изменить",name);
+    if(!reg) textButton = "Изменить";
+    else textButton = "Change";
+    QMap<QString,QString> updatedValues = helpWindow.CreateWindow(columnCount-1,textButton,name);
 
     QString updateSQL = QString("UPDATE %1 SET ").arg(tableName);
     QStringList updateParts;
@@ -104,7 +116,12 @@ void MainController::AddDB(QString tableName){
     }
     name.removeAt(0);
 
-    QMap<QString,QString> values = helpWindow.CreateWindow(count,"Добавить",name);
+    QString textButton;
+    if(!reg) textButton = "Добавить";
+    else textButton = "Add";
+
+    QMap<QString,QString> values = helpWindow.CreateWindow(count,textButton,name);
+
 
     QStringList placeholders;
     QStringList columns;
@@ -143,12 +160,15 @@ QString MainController::Console(QString sql){
     if(sql.contains("SELECT")){
         model->setQuery(query);
         helpWindow.SetTableView(model);
-        return "Запрос выполнен";
+        if(!reg) return "Запрос выполнен";
+        else return "Request completed";
     }else{
         if (query.exec(sql)) {
-            return "Запрос выполнен";
+            if(!reg) return "Запрос выполнен";
+            else return "Request completed";
         } else {
-            return "Произошла ошибка:" + query.lastError().text();
+            if(!reg) return "Произошла ошибка:" + query.lastError().text();
+            else return "An error has occurred:" + query.lastError().text();
         }
     }
 }
@@ -160,9 +180,11 @@ QString MainController::Console(QString sql,QTableView* view){
     if (query.exec(sql)) {
         model->setQuery(query);
         view->setModel(model);
-        return "Запрос выполнен";
+        if(!reg) return "Запрос выполнен";
+        else return "Request completed";
     } else {
-        return "Произошла ошибка:" + query.lastError().text();
+        if(!reg) return "Произошла ошибка:" + query.lastError().text();
+        else return "An error has occurred:" + query.lastError().text();
     }
 }
 

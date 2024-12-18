@@ -18,6 +18,7 @@ private:
         {"Банк поставщиков","SELECT s.INN,b.name FROM Supplier s LEFT JOIN Bank b ON s.id_bank = b.id"}
     };
 public:
+    bool reg = false;
     void AddDB(QString tableName);
     bool ConnectDB(QString name, QString password);
     void AllDB(QString tableName, QTableView *view);

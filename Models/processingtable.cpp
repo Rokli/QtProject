@@ -9,7 +9,7 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QV
     main->exec();
     QMap<QString,QString> dataColumns = main->GetDataColumns();
     return dataColumns;
-};
+}
 
 
 QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text){
@@ -19,7 +19,7 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text){
     main->exec();
     QMap<QString,QString> dataColumns = main->GetDataColumns();
     return dataColumns;
-};
+}
 
 QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QMap<QString,QString> name){
     SqlBD *main = new SqlBD();
@@ -30,4 +30,4 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QM
     main->exec();
     QMap<QString,QString> dataColumns = main->GetDataColumns();
     return dataColumns;
-};
+}

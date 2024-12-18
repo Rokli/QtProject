@@ -65,9 +65,12 @@ private slots:
 
     void on_changeEmploess_clicked();
 
+    void on_ragSundry_clicked();
+
 private:
     Ui::MainWindow *ui;
-    map<QString, QString> tablesMap = {
+    bool reg = false;
+    QMap<QString, QString> tablesMap = {
         {"Банк","Bank"},
         {"Категория","Category"},
         {"Кинотеатр","Cinema"},
@@ -81,6 +84,11 @@ private:
         {"Сценарист","Screenwriter"},
         {"Поставщик","Supplier"},
         {"Сотрудники","usersQt"}
+    };
+    QMap<QString, QString> documentsMap = {
+        {"Movie dates","Даты фильмов"},
+        {"Cinema addresses","Адреса кинотеатров"},
+        {"Supplier Bank","Банк поставщиков"}
     };
     MainController main;
 public:
