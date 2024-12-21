@@ -25,12 +25,14 @@ public:
     void DeleteDB(QString tableName);
     void FindDB(QString tableName, QTableView *view);
     void ChangeDB(QString tableName);
+    bool ChangeUserPasswordDB(QString username);
     void GetEmployees(QTableView *view);
     QString Console(QString sql);
     QString Console(QString sql,QTableView* view);
     void GetDocuments(QString sql, QTableView *view);
     void SaveDocuments(QAbstractItemModel *model);
     bool GetUser(QString name, QString password);
+    void ChangeTheme(QString theme);
 };
 
 #endif // MAINCONTROLLER_H

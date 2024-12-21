@@ -1,13 +1,14 @@
 #include "sqlbd.h"
 #include "ui_sqlbd.h"
 
-SqlBD::SqlBD(QWidget *parent)
+SqlBD::SqlBD(QWidget *parent, QString theme)
     : QDialog(parent)
     , ui(new Ui::SqlBD)
 {
     ui->setupUi(this);
     layout = new QVBoxLayout(this);
     setLayout(layout);
+    ChangeTheme(theme);
 }
 
 void SqlBD::SetupWindow(QString text){
@@ -76,6 +77,9 @@ void SqlBD::SetTableView(QSqlQueryModel *model) {
     }
 
     exec();
+}
+void SqlBD::ChangeTheme(QString theme){
+    setStyleSheet(theme);
 }
 SqlBD::~SqlBD()
 {

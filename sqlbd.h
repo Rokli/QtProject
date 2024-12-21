@@ -21,7 +21,7 @@ class SqlBD : public QDialog
     Q_OBJECT
 
 public:
-    explicit SqlBD(QWidget *parent = nullptr);
+    explicit SqlBD(QWidget *parent = nullptr,QString theme = " ");
     ~SqlBD();
     void SetupWindow(QString text);
     void SetupWindow(QString name, QString value);
@@ -29,11 +29,13 @@ public:
     void on_button_clicked();
     void AddButton(QString text);
     void SetTableView(QSqlQueryModel *model);
+    void ChangeTheme(QString theme);
 private:
     Ui::SqlBD *ui;
     QVBoxLayout *layout;
     QMap<QString,QLineEdit*> lineEditData;
     QMap<QString,QString> DataColumns;
+
 };
 
 #endif // SQLBD_H

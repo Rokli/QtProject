@@ -86,6 +86,51 @@ void MainController::ChangeDB(QString tableName){
     query.exec();
 }
 
+bool MainController::ChangeUserPasswordDB(QString username){
+    QString tableName = "usersQt";
+    QSqlQuery query(db);
+
+    QString sql = QString("SELECT * FROM %1 WHERE username=%2").arg(tableName, username);
+
+    query.prepare(sql);
+    query.exec();
+    query.next();
+
+    QSqlRecord record = query.record();
+    int columnCount = record.count();
+
+    QMap<QString,QString> name;
+    for (int i = 0; i < columnCount; ++i) {
+        QString columnName = record.fieldName(i);
+        QVariant value = query.value(i);
+        name[columnName] = value.toString();
+        qWarning() << query.value(i);
+    }
+    QString id = name["id"];
+    name.remove("id");
+    name.remove("created_at");
+    name.remove("updated_at");
+    name.remove("username");
+    QString textButton;
+    if(!reg) textButton = "Изменить";
+    else textButton = "Change";
+
+    QMap<QString,QString> updatedValues = helpWindow.CreateWindow(1,textButton,name);
+
+    QString updateSQL = QString("UPDATE %1 SET ").arg(tableName);
+    QStringList updateParts;
+    for (auto it = updatedValues.begin(); it != updatedValues.end(); ++it) {
+        updateParts << QString("%1='%2'").arg(it.key(), it.value());
+    }
+    updateSQL += updateParts.join(", ");
+    updateSQL += QString(" WHERE id=%1").arg(id);
+
+    query.prepare(updateSQL);
+    query.exec();
+
+    return true;
+}
+
 void MainController::AddDB(QString tableName){
     int count = 0;
     QVector<QString> name;
@@ -257,3 +302,6 @@ bool MainController::GetUser(QString name, QString password){
 
 }
 
+void MainController::ChangeTheme(QString theme){
+    helpWindow.theme = theme;
+}

@@ -1,7 +1,7 @@
 #include "processingtable.h"
 using namespace std;
 QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QVector<QString> name){
-    SqlBD *main = new SqlBD();
+    SqlBD *main = new SqlBD(nullptr,theme);
     for(int i = 0; i < columns;i++){
         main->SetupWindow(name[i]);
     }
@@ -13,7 +13,7 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QV
 
 
 QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text){
-    SqlBD *main = new SqlBD();
+    SqlBD *main = new SqlBD(nullptr,theme);
     main->SetupWindow("id");
     main->AddButton(text);
     main->exec();
@@ -22,7 +22,7 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text){
 }
 
 QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QMap<QString,QString> name){
-    SqlBD *main = new SqlBD();
+    SqlBD *main = new SqlBD(nullptr,theme);
     for (const auto& key : name.keys()) {
         main->SetupWindow(key,name.value(key));
     }
@@ -31,3 +31,4 @@ QMap<QString,QString> ProcessingTable::CreateWindow(int columns, QString text,QM
     QMap<QString,QString> dataColumns = main->GetDataColumns();
     return dataColumns;
 }
+

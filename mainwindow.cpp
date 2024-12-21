@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->centralwidget->setStyleSheet(mainTheme->GetWhiteTheme());
     main.ConnectDB("root","xrxc321");
 }
 
@@ -20,6 +21,8 @@ void MainWindow::SetupWindow(){
     RegUser reg;
     reg.exec();
     if(main.GetUser(reg.GetName(),HashPassword::HashCode(reg.GetPassword()))){
+        user->SetName(reg.GetName());
+        user->SetPassword(HashPassword::HashCode(reg.GetPassword()));
         reg.close();
         show();
     }else{
@@ -184,10 +187,10 @@ void MainWindow::on_ragSundry_clicked()
         ui->addEmployees->setText("Add");
         ui->deleteEmployess->setText("Delete");
         ui->changeEmploess->setText("Change");
-        //комбобокс в справочниках
+        //бумбокс в справочниках
         ui->comboBox->clear();
         for (auto i = tablesMap.begin(); i != tablesMap.end(); ++i) ui->comboBox->addItem(i.value());
-        //комбобокс в документах
+        //бумбокс в документах
         ui->documents->clear();
         for (auto i = documentsMap.begin(); i != documentsMap.end(); ++i) ui->documents->addItem(i.key());
         setWindowTitle("Film screenings");
@@ -229,13 +232,41 @@ void MainWindow::on_ragSundry_clicked()
         ui->addEmployees->setText("Добавить");
         ui->deleteEmployess->setText("Удалить");
         ui->changeEmploess->setText("Изменить");
-        //комбобокс в справочниках
+        //бумбокс в справочниках
         ui->comboBox->clear();
         for (auto i = tablesMap.begin(); i != tablesMap.end(); ++i) ui->comboBox->addItem(i.key());
-        //комбобокс в документах
+        //бумбокс в документах
         ui->documents->clear();
         for (auto i = documentsMap.begin(); i != documentsMap.end(); ++i) ui->documents->addItem(i.value());
         setWindowTitle("Демонстрация кинофильмов");
+    }
+}
+
+void MainWindow::on_changeSundry_clicked()
+{
+    main.ChangeUserPasswordDB(user->GetName());
+}
+
+void MainWindow::StyleSheet() {
+
+}
+
+void MainWindow::on_exitSundry_clicked()
+{
+    close();
+    SetupWindow();
+}
+
+void MainWindow::on_colorSundry_clicked()
+{
+    if(theme){
+        theme = false;
+        ui->centralwidget->setStyleSheet(mainTheme->GetDarkTheme());
+        main.ChangeTheme(mainTheme->GetDarkTheme());
+    }else{
+        theme = true;
+        ui->centralwidget->setStyleSheet(mainTheme->GetWhiteTheme());
+        main.ChangeTheme(mainTheme->GetWhiteTheme());
     }
 }
 

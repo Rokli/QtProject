@@ -12,6 +12,7 @@ SOURCES += \
     Controller/maincontroller.cpp \
     Models/hashpassword.cpp \
     Models/processingtable.cpp \
+    Models/theme.cpp \
     Models/user.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     Controller/maincontroller.h \
     Models/hashpassword.h \
     Models/processingtable.h \
+    Models/theme.h \
     Models/user.h \
     mainwindow.h \
     reguser.h \

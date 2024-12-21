@@ -17,6 +17,7 @@ public:
     ~RegUser();
     QString GetPassword();
     QString GetName();
+    void ChangeReg(bool reg);
 
 private slots:
     void on_regUserButton_clicked();

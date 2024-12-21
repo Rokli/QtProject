@@ -11,6 +11,8 @@
 #include <QLoggingCategory>
 #include "reguser.h"
 #include "Models/hashpassword.h"
+#include "Models/user.h"
+#include "Models/theme.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -67,8 +69,15 @@ private slots:
 
     void on_ragSundry_clicked();
 
+    void on_changeSundry_clicked();
+
+    void on_exitSundry_clicked();
+
+    void on_colorSundry_clicked();
+
 private:
     Ui::MainWindow *ui;
+    User *user = new User();
     bool reg = false;
     QMap<QString, QString> tablesMap = {
         {"Банк","Bank"},
@@ -90,8 +99,11 @@ private:
         {"Cinema addresses","Адреса кинотеатров"},
         {"Supplier Bank","Банк поставщиков"}
     };
+    bool theme = true;
+    Theme *mainTheme = new Theme;
     MainController main;
 public:
     void SetupWindow();
+    void StyleSheet();
 };
 #endif // MAINWINDOW_H

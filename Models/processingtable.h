@@ -10,6 +10,7 @@ class ProcessingTable
 private:
     SqlBD window;
 public:
+    QString theme;
     QMap<QString, QString> CreateWindow(int columns, QString text, QVector<QString> name);
     QMap<QString,QString> CreateWindow(int columns, QString text);
     QMap<QString,QString> CreateWindow(int columns, QString text,QMap<QString,QString> name);
